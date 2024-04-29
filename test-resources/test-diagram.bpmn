@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1q63tb2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.22.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+  <bpmn:process id="TestDiagram" name="TestDiagram" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0qp4u9l</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0qp4u9l" sourceRef="StartEvent_1" targetRef="DoSomethingJSScript" />
+    <bpmn:scriptTask id="DoSomethingJSScript" name="Do something by js script">
+      <bpmn:incoming>Flow_0qp4u9l</bpmn:incoming>
+      <bpmn:outgoing>Flow_0odc9ep</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0odc9ep" sourceRef="DoSomethingJSScript" targetRef="DoSomethingByDeprecatedDelegated" />
+    <bpmn:serviceTask id="DoSomethingByDeprecatedDelegated" name="Do something by deprecated delegated" camunda:delegateExpression="SomeDelegate.java">
+      <bpmn:incoming>Flow_0odc9ep</bpmn:incoming>
+      <bpmn:outgoing>Flow_1omszl3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1omszl3" sourceRef="DoSomethingByDeprecatedDelegated" targetRef="DoSomethingWithDeprecatedHtmlForms" />
+    <bpmn:userTask id="DoSomethingWithDeprecatedHtmlForms" name="Do something with deprecated html forms" camunda:formRef="app:static/someForm.html" camunda:formRefBinding="latest">
+      <bpmn:incoming>Flow_1omszl3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0z0zvkp</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_003eo3u">
+      <bpmn:incoming>Flow_0z0zvkp</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0z0zvkp" sourceRef="DoSomethingWithDeprecatedHtmlForms" targetRef="Event_003eo3u" />
+    <bpmn:textAnnotation id="TextAnnotation_1aeohb9">
+      <bpmn:text>Должен ругаться на наличие JS кода в несколько баллов</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1uonpd3" associationDirection="None" sourceRef="DoSomethingJSScript" targetRef="TextAnnotation_1aeohb9" />
+    <bpmn:textAnnotation id="TextAnnotation_08zqqi4">
+      <bpmn:text>Должно ругаться на наличие делегатов</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0uhnvza" associationDirection="None" sourceRef="DoSomethingByDeprecatedDelegated" targetRef="TextAnnotation_08zqqi4" />
+    <bpmn:textAnnotation id="TextAnnotation_0fysnu0">
+      <bpmn:text>Должно ругаться на наличие html форм</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_11ioqg2" associationDirection="None" sourceRef="DoSomethingWithDeprecatedHtmlForms" targetRef="TextAnnotation_0fysnu0" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="TestDiagram">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="259" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_043wqg1_di" bpmnElement="DoSomethingJSScript">
+        <dc:Bounds x="270" y="237" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04nnpaf_di" bpmnElement="DoSomethingByDeprecatedDelegated">
+        <dc:Bounds x="430" y="237" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1szya7v_di" bpmnElement="DoSomethingWithDeprecatedHtmlForms">
+        <dc:Bounds x="590" y="237" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_003eo3u_di" bpmnElement="Event_003eo3u">
+        <dc:Bounds x="752" y="259" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1uonpd3_di" bpmnElement="Association_1uonpd3">
+        <di:waypoint x="320" y="237" />
+        <di:waypoint x="320" y="178" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0uhnvza_di" bpmnElement="Association_0uhnvza">
+        <di:waypoint x="480" y="317" />
+        <di:waypoint x="480" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_11ioqg2_di" bpmnElement="Association_11ioqg2">
+        <di:waypoint x="640" y="237" />
+        <di:waypoint x="640" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qp4u9l_di" bpmnElement="Flow_0qp4u9l">
+        <di:waypoint x="215" y="277" />
+        <di:waypoint x="270" y="277" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0odc9ep_di" bpmnElement="Flow_0odc9ep">
+        <di:waypoint x="370" y="277" />
+        <di:waypoint x="430" y="277" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1omszl3_di" bpmnElement="Flow_1omszl3">
+        <di:waypoint x="530" y="277" />
+        <di:waypoint x="590" y="277" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0z0zvkp_di" bpmnElement="Flow_0z0zvkp">
+        <di:waypoint x="690" y="277" />
+        <di:waypoint x="752" y="277" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1aeohb9_di" bpmnElement="TextAnnotation_1aeohb9">
+        <dc:Bounds x="270" y="80" width="100" height="98" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_08zqqi4_di" bpmnElement="TextAnnotation_08zqqi4">
+        <dc:Bounds x="430" y="410" width="100" height="70" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0fysnu0_di" bpmnElement="TextAnnotation_0fysnu0">
+        <dc:Bounds x="590" y="80" width="100" height="70" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
