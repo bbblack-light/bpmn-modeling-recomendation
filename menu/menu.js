@@ -16,13 +16,19 @@ module.exports = function (electronApp, menuState) {
   return [{
     label: 'Send a message to the console',
     accelerator: 'CommandOrControl+=',
-    enabled: () => menuState.bpmn && menuState.platform === 'platform', 
-    action: () => console.log('📓 A custom menu entry was triggered')
-  }, 
+    enabled: () => menuState.bpmn && menuState.platform === 'platform',
+    action: () => {
+      debugger
+      var shell = require('electron').shell;
+      shell.openExternal('https://camunda.org/bpmn/reference/');
+    }
+  },
   {
     label: 'Send a different message to the console',
-    accelerator: 'CommandOrControl+-', 
+    accelerator: 'CommandOrControl+-',
     enabled: () => menuState.bpmn,
-    action: () => console.log('📓 A different custom menu entry was triggered')
+    action: () => {
+      console.log('📓 A different custom menu entry was triggered');
+    }
   }]
 }

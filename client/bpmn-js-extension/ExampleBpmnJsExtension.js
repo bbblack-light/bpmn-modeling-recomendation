@@ -1,3 +1,5 @@
+import ContextRegistrator from "../../core/config/ContextRegistrator";
+
 /**
  * A bpmn-js service that provides the actual plug-in feature.
  *
@@ -6,18 +8,19 @@
  *
  * https://github.com/bpmn-io/bpmn-js-examples
  */
+
+ContextRegistrator.register()
+
 export default function ExampleBpmnJsExtension(eventBus) {
 
   eventBus.on('shape.added', function(context) {
     var element = context.element;
-
-    console.log('🎉 A shape was added!', element);
+    ContextRegistrator.bpmnShapeAnalizeService.analizeElement(element);
   });
 
   eventBus.on('connection.added', function(context) {
     var element = context.element;
-
-    console.log('🎊 A connection was added!', element);
+    ContextRegistrator.bpmnShapeAnalizeService.analizeElement(element);
   });
 }
 

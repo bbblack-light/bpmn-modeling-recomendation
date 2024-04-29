@@ -5,9 +5,10 @@
       <bpmn:outgoing>Flow_0qp4u9l</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0qp4u9l" sourceRef="StartEvent_1" targetRef="DoSomethingJSScript" />
-    <bpmn:scriptTask id="DoSomethingJSScript" name="Do something by js script">
+    <bpmn:scriptTask id="DoSomethingJSScript" name="Do something by js script" scriptFormat="Java Script">
       <bpmn:incoming>Flow_0qp4u9l</bpmn:incoming>
       <bpmn:outgoing>Flow_0odc9ep</bpmn:outgoing>
+      <bpmn:script>console.log("some log");</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0odc9ep" sourceRef="DoSomethingJSScript" targetRef="DoSomethingByDeprecatedDelegated" />
     <bpmn:serviceTask id="DoSomethingByDeprecatedDelegated" name="Do something by deprecated delegated" camunda:delegateExpression="SomeDelegate.java">
@@ -56,18 +57,18 @@
       <bpmndi:BPMNShape id="Event_003eo3u_di" bpmnElement="Event_003eo3u">
         <dc:Bounds x="752" y="259" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_1uonpd3_di" bpmnElement="Association_1uonpd3">
-        <di:waypoint x="320" y="237" />
-        <di:waypoint x="320" y="178" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0uhnvza_di" bpmnElement="Association_0uhnvza">
-        <di:waypoint x="480" y="317" />
-        <di:waypoint x="480" y="410" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_11ioqg2_di" bpmnElement="Association_11ioqg2">
-        <di:waypoint x="640" y="237" />
-        <di:waypoint x="640" y="150" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1aeohb9_di" bpmnElement="TextAnnotation_1aeohb9">
+        <dc:Bounds x="270" y="80" width="100" height="98" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_08zqqi4_di" bpmnElement="TextAnnotation_08zqqi4">
+        <dc:Bounds x="430" y="410" width="100" height="70" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0fysnu0_di" bpmnElement="TextAnnotation_0fysnu0">
+        <dc:Bounds x="590" y="80" width="100" height="70" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0qp4u9l_di" bpmnElement="Flow_0qp4u9l">
         <di:waypoint x="215" y="277" />
         <di:waypoint x="270" y="277" />
@@ -84,18 +85,18 @@
         <di:waypoint x="690" y="277" />
         <di:waypoint x="752" y="277" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="TextAnnotation_1aeohb9_di" bpmnElement="TextAnnotation_1aeohb9">
-        <dc:Bounds x="270" y="80" width="100" height="98" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_08zqqi4_di" bpmnElement="TextAnnotation_08zqqi4">
-        <dc:Bounds x="430" y="410" width="100" height="70" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0fysnu0_di" bpmnElement="TextAnnotation_0fysnu0">
-        <dc:Bounds x="590" y="80" width="100" height="70" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1uonpd3_di" bpmnElement="Association_1uonpd3">
+        <di:waypoint x="320" y="237" />
+        <di:waypoint x="320" y="178" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0uhnvza_di" bpmnElement="Association_0uhnvza">
+        <di:waypoint x="480" y="317" />
+        <di:waypoint x="480" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_11ioqg2_di" bpmnElement="Association_11ioqg2">
+        <di:waypoint x="640" y="237" />
+        <di:waypoint x="640" y="150" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

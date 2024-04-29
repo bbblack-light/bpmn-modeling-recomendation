@@ -12,6 +12,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ ExampleBpmnJsExtension)
 /* harmony export */ });
+/* harmony import */ var _core_config_ContextRegistrator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/config/ContextRegistrator */ "./core/config/ContextRegistrator.js");
+
+
 /**
  * A bpmn-js service that provides the actual plug-in feature.
  *
@@ -20,18 +23,19 @@ __webpack_require__.r(__webpack_exports__);
  *
  * https://github.com/bpmn-io/bpmn-js-examples
  */
+
+_core_config_ContextRegistrator__WEBPACK_IMPORTED_MODULE_0__["default"].register()
+
 function ExampleBpmnJsExtension(eventBus) {
 
   eventBus.on('shape.added', function(context) {
     var element = context.element;
-
-    console.log('🎉 A shape was added!', element);
+    _core_config_ContextRegistrator__WEBPACK_IMPORTED_MODULE_0__["default"].bpmnShapeAnalizeService.analizeElement(element);
   });
 
   eventBus.on('connection.added', function(context) {
     var element = context.element;
-
-    console.log('🎊 A connection was added!', element);
+    _core_config_ContextRegistrator__WEBPACK_IMPORTED_MODULE_0__["default"].bpmnShapeAnalizeService.analizeElement(element);
   });
 }
 
@@ -75,6 +79,48 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./core/config/ContextRegistrator.js":
+/*!*******************************************!*\
+  !*** ./core/config/ContextRegistrator.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ContextRegistrator)
+/* harmony export */ });
+/* harmony import */ var _service_BpmnShapeAnalizeService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../service/BpmnShapeAnalizeService */ "./core/service/BpmnShapeAnalizeService.js");
+
+
+class ContextRegistrator {
+static bpmnShapeAnalizeService;
+
+    static register() {
+        this.bpmnShapeAnalizeService = new _service_BpmnShapeAnalizeService__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    }
+}
+
+/***/ }),
+
+/***/ "./core/service/BpmnShapeAnalizeService.js":
+/*!*************************************************!*\
+  !*** ./core/service/BpmnShapeAnalizeService.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BpmnShapeAnalizeService)
+/* harmony export */ });
+class BpmnShapeAnalizeService {
+
+    analizeElement(element) {
+        console.log(element)
+    }
+}
+
+/***/ }),
+
 /***/ "./node_modules/camunda-modeler-plugin-helpers/index.js":
 /*!**************************************************************!*\
   !*** ./node_modules/camunda-modeler-plugin-helpers/index.js ***!
@@ -83,18 +129,22 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getModelerDirectory": () => (/* binding */ getModelerDirectory),
-/* harmony export */   "getPluginsDirectory": () => (/* binding */ getPluginsDirectory),
-/* harmony export */   "registerBpmnJSModdleExtension": () => (/* binding */ registerBpmnJSModdleExtension),
-/* harmony export */   "registerBpmnJSPlugin": () => (/* binding */ registerBpmnJSPlugin),
-/* harmony export */   "registerClientExtension": () => (/* binding */ registerClientExtension),
-/* harmony export */   "registerClientPlugin": () => (/* binding */ registerClientPlugin),
-/* harmony export */   "registerCloudBpmnJSModdleExtension": () => (/* binding */ registerCloudBpmnJSModdleExtension),
-/* harmony export */   "registerCloudBpmnJSPlugin": () => (/* binding */ registerCloudBpmnJSPlugin),
-/* harmony export */   "registerDmnJSModdleExtension": () => (/* binding */ registerDmnJSModdleExtension),
-/* harmony export */   "registerDmnJSPlugin": () => (/* binding */ registerDmnJSPlugin),
-/* harmony export */   "registerPlatformBpmnJSModdleExtension": () => (/* binding */ registerPlatformBpmnJSModdleExtension),
-/* harmony export */   "registerPlatformBpmnJSPlugin": () => (/* binding */ registerPlatformBpmnJSPlugin)
+/* harmony export */   getModelerDirectory: () => (/* binding */ getModelerDirectory),
+/* harmony export */   getPluginsDirectory: () => (/* binding */ getPluginsDirectory),
+/* harmony export */   registerBpmnJSModdleExtension: () => (/* binding */ registerBpmnJSModdleExtension),
+/* harmony export */   registerBpmnJSPlugin: () => (/* binding */ registerBpmnJSPlugin),
+/* harmony export */   registerClientExtension: () => (/* binding */ registerClientExtension),
+/* harmony export */   registerClientPlugin: () => (/* binding */ registerClientPlugin),
+/* harmony export */   registerCloudBpmnJSModdleExtension: () => (/* binding */ registerCloudBpmnJSModdleExtension),
+/* harmony export */   registerCloudBpmnJSPlugin: () => (/* binding */ registerCloudBpmnJSPlugin),
+/* harmony export */   registerCloudDmnJSModdleExtension: () => (/* binding */ registerCloudDmnJSModdleExtension),
+/* harmony export */   registerCloudDmnJSPlugin: () => (/* binding */ registerCloudDmnJSPlugin),
+/* harmony export */   registerDmnJSModdleExtension: () => (/* binding */ registerDmnJSModdleExtension),
+/* harmony export */   registerDmnJSPlugin: () => (/* binding */ registerDmnJSPlugin),
+/* harmony export */   registerPlatformBpmnJSModdleExtension: () => (/* binding */ registerPlatformBpmnJSModdleExtension),
+/* harmony export */   registerPlatformBpmnJSPlugin: () => (/* binding */ registerPlatformBpmnJSPlugin),
+/* harmony export */   registerPlatformDmnJSModdleExtension: () => (/* binding */ registerPlatformDmnJSModdleExtension),
+/* harmony export */   registerPlatformDmnJSPlugin: () => (/* binding */ registerPlatformDmnJSPlugin)
 /* harmony export */ });
 /**
  * Validate and register a client plugin.
@@ -298,6 +348,54 @@ function registerDmnJSModdleExtension(descriptor) {
 }
 
 /**
+ * Validate and register a cloud specific dmn-moddle extension plugin.
+ *
+ * @param {Object} descriptor
+ *
+ * @example
+ * import {
+ *   registerCloudDmnJSModdleExtension
+ * } from 'camunda-modeler-plugin-helpers';
+ *
+ * var moddleDescriptor = {
+ *   name: 'my descriptor',
+ *   uri: 'http://example.my.company.localhost/schema/my-descriptor/1.0',
+ *   prefix: 'mydesc',
+ *
+ *   ...
+ * };
+ *
+ * registerCloudDmnJSModdleExtension(moddleDescriptor);
+ */
+function registerCloudDmnJSModdleExtension(descriptor) {
+  registerClientPlugin(descriptor, 'dmn.cloud.modeler.moddleExtension');
+}
+
+/**
+ * Validate and register a platform specific dmn-moddle extension plugin.
+ *
+ * @param {Object} descriptor
+ *
+ * @example
+ * import {
+ *   registerPlatformDmnJSModdleExtension
+ * } from 'camunda-modeler-plugin-helpers';
+ *
+ * var moddleDescriptor = {
+ *   name: 'my descriptor',
+ *   uri: 'http://example.my.company.localhost/schema/my-descriptor/1.0',
+ *   prefix: 'mydesc',
+ *
+ *   ...
+ * };
+ *
+ * registerPlatformDmnJSModdleExtension(moddleDescriptor);
+ */
+function registerPlatformDmnJSModdleExtension(descriptor) {
+  registerClientPlugin(descriptor, 'dmn.platform.modeler.moddleExtension');
+}
+
+/**
  * Validate and register a dmn-js plugin.
  *
  * @param {Object} module
@@ -322,7 +420,63 @@ function registerDmnJSPlugin(module, components) {
     components = [ components ]
   }
 
-  components.forEach(c => registerClientPlugin(module, `dmn.modeler.${c}.additionalModules`)); 
+  components.forEach(c => registerClientPlugin(module, `dmn.modeler.${c}.additionalModules`));
+}
+
+/**
+ * Validate and register a cloud specific dmn-js plugin.
+ *
+ * @param {Object} module
+ *
+ * @example
+ *
+ * import {
+ *   registerCloudDmnJSPlugin
+ * } from 'camunda-modeler-plugin-helpers';
+ *
+ * const DmnJSModule = {
+ *   __init__: [ 'myService' ],
+ *   myService: [ 'type', ... ]
+ * };
+ *
+ * registerCloudDmnJSPlugin(DmnJSModule, [ 'drd', 'literalExpression' ]);
+ * registerCloudDmnJSPlugin(DmnJSModule, 'drd')
+ */
+function registerCloudDmnJSPlugin(module, components) {
+
+  if (!Array.isArray(components)) {
+    components = [ components ]
+  }
+
+  components.forEach(c => registerClientPlugin(module, `dmn.cloud.modeler.${c}.additionalModules`));
+}
+
+/**
+ * Validate and register a platform specific dmn-js plugin.
+ *
+ * @param {Object} module
+ *
+ * @example
+ *
+ * import {
+ *   registerPlatformDmnJSPlugin
+ * } from 'camunda-modeler-plugin-helpers';
+ *
+ * const DmnJSModule = {
+ *   __init__: [ 'myService' ],
+ *   myService: [ 'type', ... ]
+ * };
+ *
+ * registerPlatformDmnJSPlugin(DmnJSModule, [ 'drd', 'literalExpression' ]);
+ * registerPlatformDmnJSPlugin(DmnJSModule, 'drd')
+ */
+function registerPlatformDmnJSPlugin(module, components) {
+
+  if (!Array.isArray(components)) {
+    components = [ components ]
+  }
+
+  components.forEach(c => registerClientPlugin(module, `dmn.platform.modeler.${c}.additionalModules`));
 }
 
 /**
