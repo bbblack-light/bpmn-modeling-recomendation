@@ -1,4 +1,5 @@
 import ContextRegistrator from "../../core/config/ContextRegistrator";
+import lint from "../../core/linter/linter";
 
 /**
  * A bpmn-js service that provides the actual plug-in feature.
@@ -15,12 +16,13 @@ export default function ExampleBpmnJsExtension(eventBus) {
 
   eventBus.on('shape.added', function(context) {
     var element = context.element;
-    ContextRegistrator.bpmnShapeAnalizeService.analizeElement(element);
+    lint(element);
+    // ContextRegistrator.bpmnShapeAnalizeService.analizeElement(element);
   });
 
   eventBus.on('connection.added', function(context) {
     var element = context.element;
-    ContextRegistrator.bpmnShapeAnalizeService.analizeElement(element);
+    // ContextRegistrator.bpmnShapeAnalizeService.analizeElement(element);
   });
 }
 

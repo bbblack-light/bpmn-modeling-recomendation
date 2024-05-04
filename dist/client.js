@@ -13,6 +13,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ ExampleBpmnJsExtension)
 /* harmony export */ });
 /* harmony import */ var _core_config_ContextRegistrator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/config/ContextRegistrator */ "./core/config/ContextRegistrator.js");
+/* harmony import */ var _core_linter_linter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../core/linter/linter */ "./core/linter/linter.js");
+
 
 
 /**
@@ -30,12 +32,13 @@ function ExampleBpmnJsExtension(eventBus) {
 
   eventBus.on('shape.added', function(context) {
     var element = context.element;
-    _core_config_ContextRegistrator__WEBPACK_IMPORTED_MODULE_0__["default"].bpmnShapeAnalizeService.analizeElement(element);
+    (0,_core_linter_linter__WEBPACK_IMPORTED_MODULE_1__["default"])(element);
+    // ContextRegistrator.bpmnShapeAnalizeService.analizeElement(element);
   });
 
   eventBus.on('connection.added', function(context) {
     var element = context.element;
-    _core_config_ContextRegistrator__WEBPACK_IMPORTED_MODULE_0__["default"].bpmnShapeAnalizeService.analizeElement(element);
+    // ContextRegistrator.bpmnShapeAnalizeService.analizeElement(element);
   });
 }
 
@@ -102,6 +105,142 @@ static bpmnShapeAnalizeService;
 
 /***/ }),
 
+/***/ "./core/linter/LinterResponse.js":
+/*!***************************************!*\
+  !*** ./core/linter/LinterResponse.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LinterResponse: () => (/* binding */ LinterResponse)
+/* harmony export */ });
+class LinterResponse {
+    isOk;
+    message;
+
+    constructor(isOk, message = null) {
+        this.isOk = isOk;
+        this.message = message;
+    }
+}
+
+/***/ }),
+
+/***/ "./core/linter/LinterState.js":
+/*!************************************!*\
+  !*** ./core/linter/LinterState.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LinterState: () => (/* binding */ LinterState)
+/* harmony export */ });
+class LinterState {
+    static #state = []
+
+    static dropState() {
+        this.#state = []
+    }
+
+    static addStates(states) {
+        this.#state = this.#state.concat(states)
+    }
+
+    static getStates() {
+        return { ...this.#state }
+    }
+}
+
+/***/ }),
+
+/***/ "./core/linter/linter.js":
+/*!*******************************!*\
+  !*** ./core/linter/linter.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ lint)
+/* harmony export */ });
+/* harmony import */ var _LinterResponse__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LinterResponse */ "./core/linter/LinterResponse.js");
+/* harmony import */ var _LinterState__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LinterState */ "./core/linter/LinterState.js");
+/* harmony import */ var _linterMessages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./linterMessages */ "./core/linter/linterMessages.js");
+
+
+
+
+function lint(element) {
+    _LinterState__WEBPACK_IMPORTED_MODULE_1__.LinterState.addStates(
+        linters
+            .map(linterData => 
+                lintByPredicate(
+                    element, 
+                    linterData.predicate, 
+                    linterData.message
+                )
+            )
+            .filter(e => !e.isOk)
+    )
+    console.log(_LinterState__WEBPACK_IMPORTED_MODULE_1__.LinterState.getStates())
+}
+
+const linters = [
+    {
+        predicate: (element)=> {
+            let bpmnElement = element.di.bpmnElement
+            return element.type === "bpmn:ScriptTask" && bpmnElement.scriptFormat === "Java Script"
+        },
+        message: _linterMessages__WEBPACK_IMPORTED_MODULE_2__.LinterMessages.JS
+    },
+    {
+        predicate: (element)=> {
+            let bpmnElement = element.di.bpmnElement
+            return element.type === "bpmn:ServiceTask" && (bpmnElement.class !== undefined || bpmnElement.delegateExpression)
+        },
+        message: _linterMessages__WEBPACK_IMPORTED_MODULE_2__.LinterMessages.DELEGATES
+    },
+    {
+        predicate: (element)=> {
+            let bpmnElement = element.di.bpmnElement
+
+            return element.type === "bpmn:UserTask" && bpmnElement.formRef !== undefined && bpmnElement.formRef.includes(".html")
+        },
+        message: _linterMessages__WEBPACK_IMPORTED_MODULE_2__.LinterMessages.HTML
+    }
+]
+
+function lintByPredicate(element, linterPredicateIsNotOk, message) {
+    let isOk = true
+    if (linterPredicateIsNotOk(element)) isOk = false
+    return new _LinterResponse__WEBPACK_IMPORTED_MODULE_0__.LinterResponse(
+        isOk,
+        isOk === true ? null : message
+    )
+}
+
+/***/ }),
+
+/***/ "./core/linter/linterMessages.js":
+/*!***************************************!*\
+  !*** ./core/linter/linterMessages.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LinterMessages: () => (/* binding */ LinterMessages)
+/* harmony export */ });
+class LinterMessages {
+    static JS = "не нада js"
+    static DELEGATES = "не нада delegates"
+    static HTML = "не нада html"
+}
+
+/***/ }),
+
 /***/ "./core/service/BpmnShapeAnalizeService.js":
 /*!*************************************************!*\
   !*** ./core/service/BpmnShapeAnalizeService.js ***!
@@ -115,7 +254,7 @@ __webpack_require__.r(__webpack_exports__);
 class BpmnShapeAnalizeService {
 
     analizeElement(element) {
-        console.log(element)
+        // console.log(element)
     }
 }
 

@@ -11,19 +11,41 @@
       <bpmn:script>console.log("some log");</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0odc9ep" sourceRef="DoSomethingJSScript" targetRef="DoSomethingByDeprecatedDelegated" />
-    <bpmn:serviceTask id="DoSomethingByDeprecatedDelegated" name="Do something by deprecated delegated" camunda:delegateExpression="SomeDelegate.java">
+    <bpmn:serviceTask id="DoSomethingByDeprecatedDelegated" name="Do something by deprecated delegated" camunda:class="SomeDelegate.js">
       <bpmn:incoming>Flow_0odc9ep</bpmn:incoming>
       <bpmn:outgoing>Flow_1omszl3</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1omszl3" sourceRef="DoSomethingByDeprecatedDelegated" targetRef="DoSomethingWithDeprecatedHtmlForms" />
-    <bpmn:userTask id="DoSomethingWithDeprecatedHtmlForms" name="Do something with deprecated html forms" camunda:formRef="app:static/someForm.html" camunda:formRefBinding="latest">
+    <bpmn:userTask id="DoSomethingWithDeprecatedHtmlForms" name="Do something with deprecated html forms" camunda:formRef="some.html" camunda:formRefBinding="latest">
       <bpmn:incoming>Flow_1omszl3</bpmn:incoming>
-      <bpmn:outgoing>Flow_0z0zvkp</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1k61zyh</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:endEvent id="Event_003eo3u">
-      <bpmn:incoming>Flow_0z0zvkp</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0z0zvkp" sourceRef="DoSomethingWithDeprecatedHtmlForms" targetRef="Event_003eo3u" />
+    <bpmn:sequenceFlow id="Flow_1k61zyh" sourceRef="DoSomethingWithDeprecatedHtmlForms" targetRef="Event1" />
+    <bpmn:intermediateCatchEvent id="Event1" name="Event1">
+      <bpmn:incoming>Flow_1k61zyh</bpmn:incoming>
+      <bpmn:outgoing>Flow_1c56y8p</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1xriqpe" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1c56y8p" sourceRef="Event1" targetRef="Event2" />
+    <bpmn:intermediateCatchEvent id="Event2" name="Event2">
+      <bpmn:incoming>Flow_1c56y8p</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yfe7ne</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0fgp1ti" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0yfe7ne" sourceRef="Event2" targetRef="Gateway_1sx5a3g" />
+    <bpmn:complexGateway id="Gateway_1sx5a3g">
+      <bpmn:incoming>Flow_0yfe7ne</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u571ux</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1hq6lot</bpmn:outgoing>
+    </bpmn:complexGateway>
+    <bpmn:task id="Activity_0c6lowg">
+      <bpmn:incoming>Flow_0u571ux</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0u571ux" sourceRef="Gateway_1sx5a3g" targetRef="Activity_0c6lowg" />
+    <bpmn:task id="Activity_0y6xcan">
+      <bpmn:incoming>Flow_1hq6lot</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1hq6lot" sourceRef="Gateway_1sx5a3g" targetRef="Activity_0y6xcan" />
     <bpmn:textAnnotation id="TextAnnotation_1aeohb9">
       <bpmn:text>Должен ругаться на наличие JS кода в несколько баллов</bpmn:text>
     </bpmn:textAnnotation>
@@ -54,8 +76,26 @@
         <dc:Bounds x="590" y="237" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_003eo3u_di" bpmnElement="Event_003eo3u">
+      <bpmndi:BPMNShape id="Event_1bclnhu_di" bpmnElement="Event1">
         <dc:Bounds x="752" y="259" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="753" y="302" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1g1mzuu_di" bpmnElement="Event2">
+        <dc:Bounds x="852" y="259" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="853" y="302" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_159cvqq_di" bpmnElement="Gateway_1sx5a3g">
+        <dc:Bounds x="955" y="252" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0c6lowg_di" bpmnElement="Activity_0c6lowg">
+        <dc:Bounds x="1080" y="237" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0y6xcan_di" bpmnElement="Activity_0y6xcan">
+        <dc:Bounds x="1080" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1aeohb9_di" bpmnElement="TextAnnotation_1aeohb9">
         <dc:Bounds x="270" y="80" width="100" height="98" />
@@ -81,9 +121,26 @@
         <di:waypoint x="530" y="277" />
         <di:waypoint x="590" y="277" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0z0zvkp_di" bpmnElement="Flow_0z0zvkp">
+      <bpmndi:BPMNEdge id="Flow_1k61zyh_di" bpmnElement="Flow_1k61zyh">
         <di:waypoint x="690" y="277" />
         <di:waypoint x="752" y="277" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c56y8p_di" bpmnElement="Flow_1c56y8p">
+        <di:waypoint x="788" y="277" />
+        <di:waypoint x="852" y="277" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yfe7ne_di" bpmnElement="Flow_0yfe7ne">
+        <di:waypoint x="888" y="277" />
+        <di:waypoint x="955" y="277" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u571ux_di" bpmnElement="Flow_0u571ux">
+        <di:waypoint x="1005" y="277" />
+        <di:waypoint x="1080" y="277" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hq6lot_di" bpmnElement="Flow_1hq6lot">
+        <di:waypoint x="980" y="302" />
+        <di:waypoint x="980" y="390" />
+        <di:waypoint x="1080" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1uonpd3_di" bpmnElement="Association_1uonpd3">
         <di:waypoint x="320" y="237" />
