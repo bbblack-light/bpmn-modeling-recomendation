@@ -12,34 +12,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ ExampleBpmnJsExtension)
 /* harmony export */ });
-/* harmony import */ var _core_config_ContextRegistrator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/config/ContextRegistrator */ "./core/config/ContextRegistrator.js");
-/* harmony import */ var _core_linter_linter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../core/linter/linter */ "./core/linter/linter.js");
+/* harmony import */ var _core_state_SchemeState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/state/SchemeState */ "./core/state/SchemeState.js");
 
 
-
-/**
- * A bpmn-js service that provides the actual plug-in feature.
- *
- * Checkout the bpmn-js examples to learn about its capabilities
- * and the extension points it offers:
- *
- * https://github.com/bpmn-io/bpmn-js-examples
- */
-
-_core_config_ContextRegistrator__WEBPACK_IMPORTED_MODULE_0__["default"].register()
+const {
+  metadata,
+  flags,
+  plugins: appPlugins,
+  backend: appBackend
+} = window.getAppPreload()
 
 function ExampleBpmnJsExtension(eventBus) {
-
   eventBus.on('shape.added', function(context) {
     var element = context.element;
-    (0,_core_linter_linter__WEBPACK_IMPORTED_MODULE_1__["default"])(element);
-    // ContextRegistrator.bpmnShapeAnalizeService.analizeElement(element);
+    _core_state_SchemeState__WEBPACK_IMPORTED_MODULE_0__["default"].addState(element);
+  });
+
+  eventBus.on('shape.removed', function(context) {
+    var element = context.element;
+    _core_state_SchemeState__WEBPACK_IMPORTED_MODULE_0__["default"].removeState(element);
   });
 
   eventBus.on('connection.added', function(context) {
     var element = context.element;
-    // ContextRegistrator.bpmnShapeAnalizeService.analizeElement(element);
   });
+
+  eventBus.on('connection.removed', function(context) {
+    var element = context.element;
+    _core_state_SchemeState__WEBPACK_IMPORTED_MODULE_0__["default"].removeState(element);
+  });
+
+  eventBus.on('elements.click', function() {
+    backend.send('dialog:open-files', options);
+  })
 }
 
 ExampleBpmnJsExtension.$inject = [
@@ -82,179 +87,29 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./core/config/ContextRegistrator.js":
-/*!*******************************************!*\
-  !*** ./core/config/ContextRegistrator.js ***!
-  \*******************************************/
+/***/ "./core/state/SchemeState.js":
+/*!***********************************!*\
+  !*** ./core/state/SchemeState.js ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ContextRegistrator)
+/* harmony export */   "default": () => (/* binding */ SchemeState)
 /* harmony export */ });
-/* harmony import */ var _service_BpmnShapeAnalizeService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../service/BpmnShapeAnalizeService */ "./core/service/BpmnShapeAnalizeService.js");
-
-
-class ContextRegistrator {
-static bpmnShapeAnalizeService;
-
-    static register() {
-        this.bpmnShapeAnalizeService = new _service_BpmnShapeAnalizeService__WEBPACK_IMPORTED_MODULE_0__["default"]();
-    }
-}
-
-/***/ }),
-
-/***/ "./core/linter/LinterResponse.js":
-/*!***************************************!*\
-  !*** ./core/linter/LinterResponse.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   LinterResponse: () => (/* binding */ LinterResponse)
-/* harmony export */ });
-class LinterResponse {
-    isOk;
-    message;
-
-    constructor(isOk, message = null) {
-        this.isOk = isOk;
-        this.message = message;
-    }
-}
-
-/***/ }),
-
-/***/ "./core/linter/LinterState.js":
-/*!************************************!*\
-  !*** ./core/linter/LinterState.js ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   LinterState: () => (/* binding */ LinterState)
-/* harmony export */ });
-class LinterState {
+class SchemeState {
     static #state = []
 
-    static dropState() {
-        this.#state = []
+    static addState(newState) {
+        this.#state.push(newState)
     }
 
-    static addStates(states) {
-        this.#state = this.#state.concat(states)
+    static removeState(old) {
+        this.#state = this.#state.filter(e => e !== old)
     }
 
-    static getStates() {
+    static getState() {
         return { ...this.#state }
-    }
-}
-
-/***/ }),
-
-/***/ "./core/linter/linter.js":
-/*!*******************************!*\
-  !*** ./core/linter/linter.js ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ lint)
-/* harmony export */ });
-/* harmony import */ var _LinterResponse__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LinterResponse */ "./core/linter/LinterResponse.js");
-/* harmony import */ var _LinterState__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LinterState */ "./core/linter/LinterState.js");
-/* harmony import */ var _linterMessages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./linterMessages */ "./core/linter/linterMessages.js");
-
-
-
-
-function lint(element) {
-    _LinterState__WEBPACK_IMPORTED_MODULE_1__.LinterState.addStates(
-        linters
-            .map(linterData => 
-                lintByPredicate(
-                    element, 
-                    linterData.predicate, 
-                    linterData.message
-                )
-            )
-            .filter(e => !e.isOk)
-    )
-    console.log(_LinterState__WEBPACK_IMPORTED_MODULE_1__.LinterState.getStates())
-}
-
-const linters = [
-    {
-        predicate: (element)=> {
-            let bpmnElement = element.di.bpmnElement
-            return element.type === "bpmn:ScriptTask" && bpmnElement.scriptFormat === "Java Script"
-        },
-        message: _linterMessages__WEBPACK_IMPORTED_MODULE_2__.LinterMessages.JS
-    },
-    {
-        predicate: (element)=> {
-            let bpmnElement = element.di.bpmnElement
-            return element.type === "bpmn:ServiceTask" && (bpmnElement.class !== undefined || bpmnElement.delegateExpression)
-        },
-        message: _linterMessages__WEBPACK_IMPORTED_MODULE_2__.LinterMessages.DELEGATES
-    },
-    {
-        predicate: (element)=> {
-            let bpmnElement = element.di.bpmnElement
-
-            return element.type === "bpmn:UserTask" && bpmnElement.formRef !== undefined && bpmnElement.formRef.includes(".html")
-        },
-        message: _linterMessages__WEBPACK_IMPORTED_MODULE_2__.LinterMessages.HTML
-    }
-]
-
-function lintByPredicate(element, linterPredicateIsNotOk, message) {
-    let isOk = true
-    if (linterPredicateIsNotOk(element)) isOk = false
-    return new _LinterResponse__WEBPACK_IMPORTED_MODULE_0__.LinterResponse(
-        isOk,
-        isOk === true ? null : message
-    )
-}
-
-/***/ }),
-
-/***/ "./core/linter/linterMessages.js":
-/*!***************************************!*\
-  !*** ./core/linter/linterMessages.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   LinterMessages: () => (/* binding */ LinterMessages)
-/* harmony export */ });
-class LinterMessages {
-    static JS = "не нада js"
-    static DELEGATES = "не нада delegates"
-    static HTML = "не нада html"
-}
-
-/***/ }),
-
-/***/ "./core/service/BpmnShapeAnalizeService.js":
-/*!*************************************************!*\
-  !*** ./core/service/BpmnShapeAnalizeService.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ BpmnShapeAnalizeService)
-/* harmony export */ });
-class BpmnShapeAnalizeService {
-
-    analizeElement(element) {
-        // console.log(element)
     }
 }
 

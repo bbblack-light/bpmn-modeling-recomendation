@@ -14,7 +14,6 @@ export default function lint(element) {
             )
             .filter(e => !e.isOk)
     )
-    console.log(LinterState.getStates())
 }
 
 const linters = [

@@ -4,6 +4,10 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0qp4u9l</bpmn:outgoing>
     </bpmn:startEvent>
+    <bpmn:serviceTask id="DoSomethingByDeprecatedDelegated" name="Do something by deprecated delegated" camunda:class="SomeDelegate.js">
+      <bpmn:incoming>Flow_0odc9ep</bpmn:incoming>
+      <bpmn:outgoing>Flow_1omszl3</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0qp4u9l" sourceRef="StartEvent_1" targetRef="DoSomethingJSScript" />
     <bpmn:scriptTask id="DoSomethingJSScript" name="Do something by js script" scriptFormat="Java Script">
       <bpmn:incoming>Flow_0qp4u9l</bpmn:incoming>
@@ -11,53 +15,44 @@
       <bpmn:script>console.log("some log");</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_0odc9ep" sourceRef="DoSomethingJSScript" targetRef="DoSomethingByDeprecatedDelegated" />
-    <bpmn:serviceTask id="DoSomethingByDeprecatedDelegated" name="Do something by deprecated delegated" camunda:class="SomeDelegate.js">
-      <bpmn:incoming>Flow_0odc9ep</bpmn:incoming>
-      <bpmn:outgoing>Flow_1omszl3</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_1omszl3" sourceRef="DoSomethingByDeprecatedDelegated" targetRef="DoSomethingWithDeprecatedHtmlForms" />
     <bpmn:userTask id="DoSomethingWithDeprecatedHtmlForms" name="Do something with deprecated html forms" camunda:formRef="some.html" camunda:formRefBinding="latest">
       <bpmn:incoming>Flow_1omszl3</bpmn:incoming>
       <bpmn:outgoing>Flow_1k61zyh</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1omszl3" sourceRef="DoSomethingByDeprecatedDelegated" targetRef="DoSomethingWithDeprecatedHtmlForms" />
+    <bpmn:task id="Activity_0c6lowg">
+      <bpmn:incoming>Flow_0u571ux</bpmn:incoming>
+    </bpmn:task>
     <bpmn:sequenceFlow id="Flow_1k61zyh" sourceRef="DoSomethingWithDeprecatedHtmlForms" targetRef="Event1" />
-    <bpmn:intermediateCatchEvent id="Event1" name="Event1">
-      <bpmn:incoming>Flow_1k61zyh</bpmn:incoming>
-      <bpmn:outgoing>Flow_1c56y8p</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1xriqpe" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_1c56y8p" sourceRef="Event1" targetRef="Event2" />
+    <bpmn:complexGateway id="Gateway_1sx5a3g">
+      <bpmn:incoming>Flow_0yfe7ne</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u571ux</bpmn:outgoing>
+    </bpmn:complexGateway>
+    <bpmn:sequenceFlow id="Flow_0u571ux" sourceRef="Gateway_1sx5a3g" targetRef="Activity_0c6lowg" />
     <bpmn:intermediateCatchEvent id="Event2" name="Event2">
       <bpmn:incoming>Flow_1c56y8p</bpmn:incoming>
       <bpmn:outgoing>Flow_0yfe7ne</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0fgp1ti" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_0yfe7ne" sourceRef="Event2" targetRef="Gateway_1sx5a3g" />
-    <bpmn:complexGateway id="Gateway_1sx5a3g">
-      <bpmn:incoming>Flow_0yfe7ne</bpmn:incoming>
-      <bpmn:outgoing>Flow_0u571ux</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1hq6lot</bpmn:outgoing>
-    </bpmn:complexGateway>
-    <bpmn:task id="Activity_0c6lowg">
-      <bpmn:incoming>Flow_0u571ux</bpmn:incoming>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_0u571ux" sourceRef="Gateway_1sx5a3g" targetRef="Activity_0c6lowg" />
-    <bpmn:task id="Activity_0y6xcan">
-      <bpmn:incoming>Flow_1hq6lot</bpmn:incoming>
-    </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_1hq6lot" sourceRef="Gateway_1sx5a3g" targetRef="Activity_0y6xcan" />
-    <bpmn:textAnnotation id="TextAnnotation_1aeohb9">
-      <bpmn:text>Должен ругаться на наличие JS кода в несколько баллов</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="Association_1uonpd3" associationDirection="None" sourceRef="DoSomethingJSScript" targetRef="TextAnnotation_1aeohb9" />
-    <bpmn:textAnnotation id="TextAnnotation_08zqqi4">
-      <bpmn:text>Должно ругаться на наличие делегатов</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="Association_0uhnvza" associationDirection="None" sourceRef="DoSomethingByDeprecatedDelegated" targetRef="TextAnnotation_08zqqi4" />
+    <bpmn:intermediateCatchEvent id="Event1" name="Event1">
+      <bpmn:incoming>Flow_1k61zyh</bpmn:incoming>
+      <bpmn:outgoing>Flow_1c56y8p</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1xriqpe" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1c56y8p" sourceRef="Event1" targetRef="Event2" />
     <bpmn:textAnnotation id="TextAnnotation_0fysnu0">
       <bpmn:text>Должно ругаться на наличие html форм</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_11ioqg2" associationDirection="None" sourceRef="DoSomethingWithDeprecatedHtmlForms" targetRef="TextAnnotation_0fysnu0" />
+    <bpmn:textAnnotation id="TextAnnotation_08zqqi4">
+      <bpmn:text>Должно ругаться на наличие делегатов</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0uhnvza" associationDirection="None" sourceRef="DoSomethingByDeprecatedDelegated" targetRef="TextAnnotation_08zqqi4" />
+    <bpmn:textAnnotation id="TextAnnotation_1aeohb9">
+      <bpmn:text>Должен ругаться на наличие JS кода в несколько баллов</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1uonpd3" associationDirection="None" sourceRef="DoSomethingJSScript" targetRef="TextAnnotation_1aeohb9" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="TestDiagram">
@@ -93,9 +88,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0c6lowg_di" bpmnElement="Activity_0c6lowg">
         <dc:Bounds x="1080" y="237" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0y6xcan_di" bpmnElement="Activity_0y6xcan">
-        <dc:Bounds x="1080" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1aeohb9_di" bpmnElement="TextAnnotation_1aeohb9">
         <dc:Bounds x="270" y="80" width="100" height="98" />
@@ -136,11 +128,6 @@
       <bpmndi:BPMNEdge id="Flow_0u571ux_di" bpmnElement="Flow_0u571ux">
         <di:waypoint x="1005" y="277" />
         <di:waypoint x="1080" y="277" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1hq6lot_di" bpmnElement="Flow_1hq6lot">
-        <di:waypoint x="980" y="302" />
-        <di:waypoint x="980" y="390" />
-        <di:waypoint x="1080" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1uonpd3_di" bpmnElement="Association_1uonpd3">
         <di:waypoint x="320" y="237" />
