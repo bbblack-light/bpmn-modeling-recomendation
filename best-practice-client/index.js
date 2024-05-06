@@ -1,5 +1,5 @@
 const {
-    backend: appBackend
+    backend
 } = window.getAppPreload();
 
 console.log(backend)

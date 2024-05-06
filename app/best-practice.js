@@ -1,5 +1,7 @@
 
 const { app, BrowserWindow } = require('electron')
+const path = require('path');
+
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
@@ -9,10 +11,10 @@ const createWindow = () => {
       }
   })
 
-  win.loadFile('./../index.html')
+  win.loadFile(path.resolve(__dirname + '/../best-practice-client/index.html'))
 }
 
-module.exports = function (electronApp, menuState) {
+module.exports = function () {
   return [
     {
       label: 'Start best practice test',
