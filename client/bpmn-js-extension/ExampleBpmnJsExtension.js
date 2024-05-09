@@ -1,12 +1,5 @@
 import SchemeState from "../../core/state/SchemeState";
 
-const {
-  metadata,
-  flags,
-  plugins: appPlugins,
-  backend: appBackend
-} = window.getAppPreload()
-
 export default function ExampleBpmnJsExtension(eventBus) {
   eventBus.on('shape.added', function(context) {
     var element = context.element;

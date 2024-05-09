@@ -15,13 +15,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_state_SchemeState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/state/SchemeState */ "./core/state/SchemeState.js");
 
 
-const {
-  metadata,
-  flags,
-  plugins: appPlugins,
-  backend: appBackend
-} = window.getAppPreload()
-
 function ExampleBpmnJsExtension(eventBus) {
   eventBus.on('shape.added', function(context) {
     var element = context.element;

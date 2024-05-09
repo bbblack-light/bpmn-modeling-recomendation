@@ -4,7 +4,8 @@ const {
 } = require('electron');
 
 const allowedEvents = [
-    'test:test'
+    'test:test',
+    'test:sync'
   ];
 
 let executed = false;
@@ -43,11 +44,10 @@ contextBridge.exposeInMainWorld('getAppPreload', function() {
         throw new Error(`Disallowed event: ${event}`);
       }
   
-      const id = generateId();
   
       return new Promise((resolve, reject) => {
   
-        once(event + ':response:' + id, function(evt, args) {
+        once(event + ':response:', function(evt, args) {
           if (args[0] !== null) {
             reject(args[0]);
           }
@@ -56,7 +56,7 @@ contextBridge.exposeInMainWorld('getAppPreload', function() {
           return resolve(args[1]);
         });
   
-        ipcRenderer.send(event, id, args);
+        ipcRenderer.send(event, args);
       });
   
     }

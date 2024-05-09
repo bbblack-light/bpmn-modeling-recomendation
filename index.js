@@ -6,7 +6,7 @@
 'use strict';
 
 module.exports = {
-  name: 'Example Plug-in',
+  name: 'Best practice solver',
   menu: './app/best-practice.js',
   style: './style/style.css',
   script: './dist/client.js',

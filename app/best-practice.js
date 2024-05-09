@@ -1,4 +1,5 @@
 
+console.log("HEREEE")
 const { app, BrowserWindow } = require('electron')
 const path = require('path');
 
@@ -24,3 +25,16 @@ module.exports = function () {
     }
   ]
 }
+
+const renderer = require('./renderer');
+console.log("HEREEE", renderer)
+
+renderer.on('test:test', () => {
+    console.log("HEEERRRE WE GOOOOOO")
+});
+
+renderer.on('test:sync', (done) => {
+    console.log("HEEERRRE WE GOOOOOO")
+    done(null, "HERE WE GOOOOOO");
+  });
+  
