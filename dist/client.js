@@ -12,7 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ ExampleBpmnJsExtension)
 /* harmony export */ });
-/* harmony import */ var _core_state_SchemeState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/state/SchemeState */ "./core/state/SchemeState.js");
+/* harmony import */ var _core_state_SchemeState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/state/SchemeState */ "./client/core/state/SchemeState.js");
 
 
 function ExampleBpmnJsExtension(eventBus) {
@@ -34,10 +34,6 @@ function ExampleBpmnJsExtension(eventBus) {
     var element = context.element;
     _core_state_SchemeState__WEBPACK_IMPORTED_MODULE_0__["default"].removeState(element);
   });
-
-  eventBus.on('elements.click', function() {
-    backend.send('dialog:open-files', options);
-  })
 }
 
 ExampleBpmnJsExtension.$inject = [
@@ -80,10 +76,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./core/state/SchemeState.js":
-/*!***********************************!*\
-  !*** ./core/state/SchemeState.js ***!
-  \***********************************/
+/***/ "./client/core/state/SchemeState.js":
+/*!******************************************!*\
+  !*** ./client/core/state/SchemeState.js ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -95,10 +91,12 @@ class SchemeState {
 
     static addState(newState) {
         this.#state.push(newState)
+        localStorage.setItem('scheme-state', JSON.stringify(this.#state))
     }
 
     static removeState(old) {
         this.#state = this.#state.filter(e => e !== old)
+        localStorage.setItem('scheme-state', JSON.stringify(this.#state))
     }
 
     static getState() {

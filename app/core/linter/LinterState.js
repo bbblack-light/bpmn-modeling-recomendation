@@ -1,4 +1,4 @@
-export class LinterState {
+module.exports = class LinterState {
     static #state = []
 
     static dropState() {

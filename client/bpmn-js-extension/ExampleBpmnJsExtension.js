@@ -1,4 +1,4 @@
-import SchemeState from "../../core/state/SchemeState";
+import SchemeState from "../core/state/SchemeState";
 
 export default function ExampleBpmnJsExtension(eventBus) {
   eventBus.on('shape.added', function(context) {
@@ -19,10 +19,6 @@ export default function ExampleBpmnJsExtension(eventBus) {
     var element = context.element;
     SchemeState.removeState(element);
   });
-
-  eventBus.on('elements.click', function() {
-    backend.send('dialog:open-files', options);
-  })
 }
 
 ExampleBpmnJsExtension.$inject = [

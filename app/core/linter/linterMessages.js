@@ -1,4 +1,4 @@
-export class LinterMessages {
+module.exports = class LinterMessages {
     static JS = "не нада js"
     static DELEGATES = "не нада delegates"
     static HTML = "не нада html"

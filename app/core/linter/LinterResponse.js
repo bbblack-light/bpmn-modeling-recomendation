@@ -1,4 +1,4 @@
-export class LinterResponse {
+module.exports = class LinterResponse {
     isOk;
     message;
 

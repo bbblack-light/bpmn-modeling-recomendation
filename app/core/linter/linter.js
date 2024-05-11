@@ -1,8 +1,15 @@
-import { LinterResponse } from "./LinterResponse"
-import { LinterState } from "./LinterState"
-import { LinterMessages } from "./linterMessages"
+const { LinterResponse } = require("./LinterResponse")
+const { LinterState } = require("./LinterState")
+const { LinterMessages } = require("./linterMessages")
 
-export default function lint(element) {
+module.exports = function lintElementsAndSaveToLocalStorage(elements) {
+    elements.forEach(element => {
+        lint(element)
+    });
+    localStorage.setItem('linter-state', LinterState.getStates())
+}
+
+function lint(element) {
     LinterState.addStates(
         linters
             .map(linterData => 
