@@ -1,3 +1,5 @@
+const { f } = require("./script");
+
 const {
     backend
 } = window.getAppPreload();
@@ -5,7 +7,9 @@ const {
 console.log(backend)
 
 function myFunctionSend() {
-    backend.send('test:test')
+    f()
+    // localStorage.setItem("secondwindow", "test:test")
+    // backend.send('test:test')
 }
 
 async function myFunctionSendSync() {

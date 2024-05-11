@@ -1,10 +1,9 @@
 
-console.log("HEREEE")
 const { app, BrowserWindow } = require('electron')
 const path = require('path');
 
 const createWindow = () => {
-  const win = new BrowserWindow({
+  const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -12,7 +11,11 @@ const createWindow = () => {
       }
   })
 
-  win.loadFile(path.resolve(__dirname + '/../best-practice-client/index.html'))
+  let url = 'file://' + path.resolve(__dirname + '/../best-practice-client/build/index.html')
+  if (process.env.NODE_ENV === 'development') {
+    url = 'http://localhost:3000/'
+  }
+  mainWindow.loadURL(url);
 }
 
 module.exports = function () {
@@ -26,15 +29,14 @@ module.exports = function () {
   ]
 }
 
+// api's
 const renderer = require('./renderer');
-console.log("HEREEE", renderer)
+const { LinterState } = require('./core/linter/LinterState');
 
-renderer.on('test:test', () => {
-    console.log("HEEERRRE WE GOOOOOO")
+renderer.on('save-sheme-state', (options) => {
+  LinterState.setStates(options)
 });
 
 renderer.on('test:sync', (done) => {
-    console.log("HEEERRRE WE GOOOOOO")
     done(null, "HERE WE GOOOOOO");
-  });
-  
+});
