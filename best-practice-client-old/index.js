@@ -8,7 +8,7 @@ console.log(backend)
 
 function myFunctionSend() {
     f()
-    // localStorage.setItem("secondwindow", "test:test")
+    localStorage.getItem("secondwindow", "test:test")
     // backend.send('test:test')
 }
 

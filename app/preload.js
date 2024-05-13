@@ -4,8 +4,8 @@ const {
 } = require('electron');
 
 const allowedEvents = [
-    'test:test',
-    'test:sync'
+    'save-sheme-state',
+    'expert-system-resolve'
   ];
 
 let executed = false;
