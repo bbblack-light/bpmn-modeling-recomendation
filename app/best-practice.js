@@ -32,7 +32,7 @@ module.exports = function () {
 // api's
 const renderer = require('./renderer');
 const { LinterState } = require('./core/linter/LinterState');
-const PersonInputs = require('./core/expert-system/PersonInputs');
+const PersonInputs = require('./domain/expert-system/PersonInputs');
 const ExpertSystem = require('./core/expert-system/ExpertSystem');
 
 renderer.on('save-sheme-state', (options) => {
