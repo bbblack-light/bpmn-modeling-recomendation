@@ -12,7 +12,6 @@ module.exports = class ExpertSystem {
                 new InputNode(inputCodes.PREPARE_TO_CAMUNDA_8, 1),
                 new InputNode(inputCodes.CUSTOM_TASKLIST, 1),
                 new InputNode(inputCodes.NOT_QUICK_RELEASE, 1),
-                new InputNode(inputCodes.AVAILABLE_NOT_QUICK_RELEASE, 0.8),
             ]
         ),
 
@@ -21,7 +20,6 @@ module.exports = class ExpertSystem {
             [
                 new InputNode(inputCodes.HANDLE_ERROR, 1),
                 new InputNode(inputCodes.NOT_QUICK_RELEASE, 1),
-                new InputNode(inputCodes.AVAILABLE_NOT_QUICK_RELEASE, 0.8),
             ]
         ),
 
@@ -32,7 +30,6 @@ module.exports = class ExpertSystem {
                 new InputNode(inputCodes.TOO_HARD_TO_FEATURES, 1),
                 new InputNode(inputCodes.HARD_TO_FEATURES, 0.5),
                 new InputNode(inputCodes.NOT_QUICK_RELEASE, 1),
-                new InputNode(inputCodes.AVAILABLE_NOT_QUICK_RELEASE, 0.8),
             ]
         ),
 
@@ -43,7 +40,6 @@ module.exports = class ExpertSystem {
                 new InputNode(inputCodes.HARD_TO_FEATURES, 0.5),
                 new InputNode(inputCodes.REPEATABLE_MOMENTS, 1),
                 new InputNode(inputCodes.NOT_QUICK_RELEASE, 1),
-                new InputNode(inputCodes.AVAILABLE_NOT_QUICK_RELEASE, 0.8),
             ]
         ),
 
@@ -51,7 +47,6 @@ module.exports = class ExpertSystem {
             outCodes.LIVE_ALONE,
             [
                 new InputNode(inputCodes.QUICK_RELEASE, 1),
-                new InputNode(inputCodes.AVAILABLE_QUICK_RELEASE, 0.5),
                 new InputNode(inputCodes.NO_CUSTOM_TASKLIST, 1),
                 new InputNode(inputCodes.NOT_PREPARE_TO_CAMUNDA_8, 0.3),
             ]
