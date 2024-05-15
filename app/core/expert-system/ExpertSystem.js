@@ -1,6 +1,6 @@
-const OutputNode = require('./OutputNode')
-const InputNode = require('./InputNode')
-const ExpertSystemResolvedNodeOutput = require('./ExpertSystemResolvedNodeOutput')
+const OutputNode = require('../../domain/expert-system/OutputNode')
+const InputNode = require('../../domain/expert-system/InputNode')
+const ExpertSystemResolvedNodeOutput = require('../../domain/expert-system/ExpertSystemResolvedNodeOutput')
 const { outCodes, inputCodes } = require('./consts')
 
 module.exports = class ExpertSystem {
