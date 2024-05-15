@@ -6,7 +6,7 @@
 'use strict';
 
 module.exports = {
-  name: 'Best practice solver',
+  name: 'Best practice helper',
   menu: './app/best-practice.js',
   style: './style/style.css',
   script: './dist/client.js',

@@ -5,7 +5,8 @@ const {
 
 const allowedEvents = [
     'save-sheme-state',
-    'expert-system-resolve'
+    'expert-system-resolve',
+    'get-questionaire'
   ];
 
 let executed = false;

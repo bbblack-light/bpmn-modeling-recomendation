@@ -31,9 +31,10 @@ module.exports = function () {
 
 // api's
 const renderer = require('./renderer');
-const { LinterState } = require('./core/linter/LinterState');
+const LinterState = require('./core/linter/LinterState');
 const PersonInputs = require('./domain/expert-system/PersonInputs');
 const ExpertSystem = require('./core/expert-system/ExpertSystem');
+const Questionaire = require('./core/questionaire/Questionare');
 
 renderer.on('save-sheme-state', (options) => {
   LinterState.setStates(options)
@@ -43,4 +44,8 @@ renderer.on('expert-system-resolve', (options, done) => {
   let personInputs = options.map(value => new PersonInputs(value.name, value.value))
   console.log(personInputs)
   done(null, ExpertSystem.resolveWithInputs(personInputs));
+});
+
+renderer.on('get-questionaire', (done) => {
+  done(null, Questionaire.getContent());
 });

@@ -17,3 +17,8 @@ export const inputCodes = {
     QUICK_RELEASE: "QUICK_RELEASE",
     NOT_QUICK_RELEASE: "NOT_QUICK_RELEASE",
 }
+
+export const allowStates = {
+    QUESTIONAIRE: "QUESTIONAIRE",
+    CHECK_RESULTS: "CHECK_RESULTS"
+  }

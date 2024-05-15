@@ -5,8 +5,8 @@ module.exports = class LinterState {
         this.#state = []
     }
 
-    static addStates(states) {
-        this.#state = this.#state.concat(states)
+    static setStates(states) {
+        this.#state = states
     }
 
     static getStates() {
