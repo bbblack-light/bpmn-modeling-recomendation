@@ -27,7 +27,6 @@ module.exports = class ExpertSystem {
             outCodes.IMPROVE_PROCESS_READABILITY,
             [
                 new InputNode(inputCodes.HANDLE_ERROR, 0.8),
-                new InputNode(inputCodes.TOO_HARD_TO_FEATURES, 1),
                 new InputNode(inputCodes.HARD_TO_FEATURES, 0.5),
                 new InputNode(inputCodes.NOT_QUICK_RELEASE, 1),
             ]
@@ -36,7 +35,6 @@ module.exports = class ExpertSystem {
         new OutputNode(
             outCodes.DECOMPOSE_PROCESS,
             [
-                new InputNode(inputCodes.TOO_HARD_TO_FEATURES, 1),
                 new InputNode(inputCodes.HARD_TO_FEATURES, 0.5),
                 new InputNode(inputCodes.REPEATABLE_MOMENTS, 1),
                 new InputNode(inputCodes.NOT_QUICK_RELEASE, 1),
