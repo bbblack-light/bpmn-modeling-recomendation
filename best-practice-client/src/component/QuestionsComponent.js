@@ -21,11 +21,16 @@ export default function QuestionsComponent({questionsEnded}) {
 
     return (
         <>
-            <QuestionComponent 
-                nextQuestion = {nextQuestion}
-                question = {questions[questionIndex]}
-            />
-            <button onClick={questionsEnded}> end questionaire</button>
+        <div class="wrapper">
+            <h3>Ответьте на вопрос:</h3>
+            <div class="card">
+                <QuestionComponent 
+                    nextQuestion = {nextQuestion}
+                    question = {questions[questionIndex]}
+                />
+            </div>
+            <button onClick={() => questionsEnded(answers)}> end questionaire</button>
+        </div>
         </>
     )
   }

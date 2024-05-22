@@ -1,4 +1,4 @@
-module.exports = class Answer {
+export default class Answer {
     text;
     inputNodes;
     constructor(text, inputNodes) {

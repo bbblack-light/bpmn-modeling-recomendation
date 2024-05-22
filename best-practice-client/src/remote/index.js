@@ -13,7 +13,6 @@ const {
 
   async function getQuestion() {
     let questions = await backend.send('get-questionaire')
-    console.log(questions)
     return questions.map(question => {
         return new Question(
             question.text, 
@@ -24,3 +23,13 @@ const {
         )
     })
   }
+
+
+function saveSchemeState() {
+    let state = JSON.parse(localStorage.getItem('linter-state'))
+    if (state === null || state === undefined) state = []
+    console.log(state)
+    backend.send('save-linter-state', state)
+}
+  
+saveSchemeState()

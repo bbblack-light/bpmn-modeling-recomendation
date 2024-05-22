@@ -42,7 +42,7 @@ module.exports = class ExpertSystem {
         ),
 
         new OutputNode(
-            outCodes.LIVE_ALONE,
+            outCodes.LEAVE_ALONE,
             [
                 new InputNode(inputCodes.QUICK_RELEASE, 1),
                 new InputNode(inputCodes.NO_CUSTOM_TASKLIST, 1),

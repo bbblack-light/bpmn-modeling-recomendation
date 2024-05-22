@@ -4,9 +4,10 @@ const {
 } = require('electron');
 
 const allowedEvents = [
-    'save-sheme-state',
+    'save-linter-state',
     'expert-system-resolve',
-    'get-questionaire'
+    'get-questionaire',
+    'questionaire-resolve'
   ];
 
 let executed = false;

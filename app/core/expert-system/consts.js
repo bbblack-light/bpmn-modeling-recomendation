@@ -1,11 +1,10 @@
-
 module.exports = {
     outCodes: {
         PREPARE_TO_CAMUNDA_8: "PREPARE_TO_CAMUNDA_8",
         CHECK_INSTRUMENTS: "CHECK_INSTRUMENTS",
         IMPROVE_PROCESS_READABILITY: "IMPROVE_PROCESS_READABILITY",
         DECOMPOSE_PROCESS: "DECOMPOSE_PROCESS",
-        LIVE_ALONE: "LIVE_ALONE",
+        LEAVE_ALONE: "LEAVE_ALONE",
     },
     inputCodes: {
         PREPARE_TO_CAMUNDA_8: "PREPARE_TO_CAMUNDA_8",
@@ -17,5 +16,10 @@ module.exports = {
         NO_CUSTOM_TASKLIST: "NO_CUSTOM_TASKLIST",
         QUICK_RELEASE: "QUICK_RELEASE",
         NOT_QUICK_RELEASE: "NOT_QUICK_RELEASE",
+    },
+    normilizeRecomendationStatus: {
+        LOW: "LOW",
+        MEDIUM: "MEDIUM",
+        HIGHT: "HIGHT"
     }
 }

@@ -1,9 +1,8 @@
-export default function AnswerComponent({ answers }) {
+export default function AnswerComponent({ answer, onAnswerClicked }) {
     return (
-    <div>
-        {question.answers.map(answer => 
-            <radio>{answer.text}</radio>
-        )}
-    </div>
+        <button class="btn"
+            onClick={() => onAnswerClicked(answer)}>
+            {answer.text}
+        </button>
     )
 }

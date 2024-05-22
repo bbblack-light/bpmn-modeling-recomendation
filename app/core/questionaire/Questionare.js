@@ -88,8 +88,4 @@ module.exports = class Questionaire {
     static getContent() {
         return this.#content
     }
-
-    static mapToExpertSystemInput() {
-        throw new Error("not implemented yet")
-    }
 }

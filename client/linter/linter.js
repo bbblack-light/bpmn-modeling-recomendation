@@ -1,26 +1,24 @@
-const { LinterResponse } = require("./LinterResponse")
-const { LinterState } = require("./LinterState")
-const { LinterMessages } = require("./linterMessages")
+import LinterResponse from './LinterResponse'
+import LinterMessages from './linterMessages'
 
-module.exports = function lintElementsAndSaveToLocalStorage(elements) {
-    elements.forEach(element => {
-        lint(element)
-    });
-    localStorage.setItem('linter-state', LinterState.getStates())
+export default function lintElementsAndSaveToLocalStorage(elements) {
+    let result = elements.map(element => lint(element))
+        .flat()
+        .filter(e => e!=[])
+    localStorage.setItem('linter-state', JSON.stringify(result));
+    return result
 }
 
 function lint(element) {
-    LinterState.addStates(
-        linters
-            .map(linterData => 
-                lintByPredicate(
-                    element, 
-                    linterData.predicate, 
-                    linterData.message
-                )
+    return linters
+        .map(linterData => 
+            lintByPredicate(
+                element, 
+                linterData.predicate, 
+                linterData.message
             )
-            .filter(e => !e.isOk)
-    )
+        )
+        .filter(e => !e.isOk)
 }
 
 const linters = [
@@ -52,6 +50,7 @@ function lintByPredicate(element, linterPredicateIsNotOk, message) {
     let isOk = true
     if (linterPredicateIsNotOk(element)) isOk = false
     return new LinterResponse(
+        element.id,
         isOk,
         isOk === true ? null : message
     )

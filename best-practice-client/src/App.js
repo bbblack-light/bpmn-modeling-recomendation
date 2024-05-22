@@ -18,6 +18,13 @@ function App() {
       console.log(results)
       setResults(results)
       setWindowState(allowStates.CHECK_RESULTS)
+
+
+      let results2 = await backend.send(
+        'questionaire-resolve', 
+        answers.map(answer => answer.inputNodes).flat()
+      )
+      console.log(results2)
   }
 
   const startAgain = () =>  {

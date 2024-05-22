@@ -1,4 +1,4 @@
-module.exports = class SchemeState {
+module.exports = class LinterState {
     static #state = []
 
     static setState(state) {
@@ -6,6 +6,6 @@ module.exports = class SchemeState {
     }
 
     static getState() {
-        return { ...this.#state }
+        return this.#state
     }
 }

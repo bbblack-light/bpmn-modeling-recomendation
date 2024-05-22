@@ -36,6 +36,8 @@ function ExampleBpmnJsExtension(eventBus) {
   });
 }
 
+//todo: check cross domain localstorage
+
 ExampleBpmnJsExtension.$inject = [
   'eventBus'
 ];
@@ -86,22 +88,135 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ SchemeState)
 /* harmony export */ });
+/* harmony import */ var _linter_linter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../linter/linter */ "./client/linter/linter.js");
+
+
 class SchemeState {
     static #state = []
 
     static addState(newState) {
         this.#state.push(newState)
-        localStorage.setItem('scheme-state', JSON.stringify(this.#state))
+        ;(0,_linter_linter__WEBPACK_IMPORTED_MODULE_0__["default"])(this.#state)
     }
 
     static removeState(old) {
         this.#state = this.#state.filter(e => e !== old)
-        localStorage.setItem('scheme-state', JSON.stringify(this.#state))
+        ;(0,_linter_linter__WEBPACK_IMPORTED_MODULE_0__["default"])(this.#state)
     }
+}
 
-    static getState() {
-        return { ...this.#state }
+/***/ }),
+
+/***/ "./client/linter/LinterResponse.js":
+/*!*****************************************!*\
+  !*** ./client/linter/LinterResponse.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ LinterResponse)
+/* harmony export */ });
+class LinterResponse {
+    bpmnElementId;
+    isOk;
+    message;
+
+    constructor(bpmnElementId, isOk, message = null) {
+        this.bpmnElementId = bpmnElementId;
+        this.isOk = isOk;
+        this.message = message;
     }
+}
+
+/***/ }),
+
+/***/ "./client/linter/linter.js":
+/*!*********************************!*\
+  !*** ./client/linter/linter.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ lintElementsAndSaveToLocalStorage)
+/* harmony export */ });
+/* harmony import */ var _LinterResponse__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LinterResponse */ "./client/linter/LinterResponse.js");
+/* harmony import */ var _linterMessages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./linterMessages */ "./client/linter/linterMessages.js");
+
+
+
+function lintElementsAndSaveToLocalStorage(elements) {
+    let result = elements.map(element => lint(element))
+        .flat()
+        .filter(e => e!=[])
+    localStorage.setItem('linter-state', JSON.stringify(result));
+    return result
+}
+
+function lint(element) {
+    return linters
+        .map(linterData => 
+            lintByPredicate(
+                element, 
+                linterData.predicate, 
+                linterData.message
+            )
+        )
+        .filter(e => !e.isOk)
+}
+
+const linters = [
+    {
+        predicate: (element)=> {
+            let bpmnElement = element.di.bpmnElement
+            return element.type === "bpmn:ScriptTask" && bpmnElement.scriptFormat === "Java Script"
+        },
+        message: _linterMessages__WEBPACK_IMPORTED_MODULE_1__["default"].JS
+    },
+    {
+        predicate: (element)=> {
+            let bpmnElement = element.di.bpmnElement
+            return element.type === "bpmn:ServiceTask" && (bpmnElement.class !== undefined || bpmnElement.delegateExpression)
+        },
+        message: _linterMessages__WEBPACK_IMPORTED_MODULE_1__["default"].DELEGATES
+    },
+    {
+        predicate: (element)=> {
+            let bpmnElement = element.di.bpmnElement
+
+            return element.type === "bpmn:UserTask" && bpmnElement.formRef !== undefined && bpmnElement.formRef.includes(".html")
+        },
+        message: _linterMessages__WEBPACK_IMPORTED_MODULE_1__["default"].HTML
+    }
+]
+
+function lintByPredicate(element, linterPredicateIsNotOk, message) {
+    let isOk = true
+    if (linterPredicateIsNotOk(element)) isOk = false
+    return new _LinterResponse__WEBPACK_IMPORTED_MODULE_0__["default"](
+        element.id,
+        isOk,
+        isOk === true ? null : message
+    )
+}
+
+/***/ }),
+
+/***/ "./client/linter/linterMessages.js":
+/*!*****************************************!*\
+  !*** ./client/linter/linterMessages.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ LinterMessages)
+/* harmony export */ });
+class LinterMessages {
+    static JS = "не нада js"
+    static DELEGATES = "не нада delegates"
+    static HTML = "не нада html"
 }
 
 /***/ }),

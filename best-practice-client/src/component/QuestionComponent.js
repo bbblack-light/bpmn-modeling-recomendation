@@ -1,20 +1,24 @@
+import AnswerComponent from './AnswerComponent'
+
 export default function QuestionComponent({ question, nextQuestion }) {
       return (
         <>
-          <div>{question.text}</div>
-          <div>
-            {question.answers.map((answer, index) => {
-              return (
-                <button 
+        <div class="card-content">
+            <div>{question.text}</div>
+            <div>
+              {question.answers.map((answer, index) => {
+                return (
+                  <AnswerComponent 
                     key={ index }
                     data-idx={ index }
-                    onClick={() => {
-                        nextQuestion(answer)
-                    }}>
-                    {answer.text}
-                </button>
-              )
-            })}
+                    onAnswerClicked={(data) => {
+                      nextQuestion(data)
+                    }}
+                    answer = { answer }
+                  />
+                )
+              })}
+            </div>
           </div>
         </>
     )
