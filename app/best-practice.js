@@ -12,9 +12,9 @@ const createWindow = () => {
   })
 
   let url = 'file://' + path.resolve(__dirname + '/../best-practice-client/build/index.html')
-  // if (process.env.NODE_ENV === 'development') {
-  //   url = 'http://localhost:3000/'
-  // }
+  if (process.env.NODE_ENV === 'development') {
+    url = 'http://localhost:3000/'
+  }
   mainWindow.loadURL(url);
 }
 
@@ -36,9 +36,11 @@ const ExpertSystem = require('./core/expert-system/ExpertSystem');
 const Questionaire = require('./core/questionaire/Questionare');
 const LinterState = require('./core/scheme/LinterState');
 const RecomendationMapper = require('./core/expert-system/RecomendationsMapper');
+const { outCodes } = require('./domain/consts');
 
-renderer.on('save-linter-state', (options) => {
+renderer.on('save-linter-state', (options, done) => {
   LinterState.setState(options)
+  done(null);
 });
 
 renderer.on('expert-system-resolve', (options, done) => {
@@ -49,10 +51,11 @@ renderer.on('expert-system-resolve', (options, done) => {
 
 renderer.on('questionaire-resolve', (options, done) => {
   let personInputs = options.map(value => new PersonInputs(value.name, value.value))
-  console.log(personInputs)
+  console.log('personInputs', personInputs)
   let esRsult = ExpertSystem.resolveWithInputs(personInputs);
-  let recomendations = RecomendationMapper.mapToRecomendation(esRsult)
-  console.log(recomendations)
+  console.log('esRsult', esRsult)
+  let recomendations = RecomendationMapper.mapToRecomendation(esRsult, { linter: LinterState.getState()})
+  console.log('recomendations', recomendations)
   done(null, { 
     recomendations: recomendations,
     linterValue: LinterState.getState()

@@ -25,11 +25,9 @@ const {
   }
 
 
-function saveSchemeState() {
+export async function saveSchemeState() {
     let state = JSON.parse(localStorage.getItem('linter-state'))
     if (state === null || state === undefined) state = []
     console.log(state)
-    backend.send('save-linter-state', state)
+    await backend.send('save-linter-state', state)
 }
-  
-saveSchemeState()

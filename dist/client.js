@@ -145,7 +145,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _linterMessages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./linterMessages */ "./client/linter/linterMessages.js");
 
 
-
+localStorage.removeItem('linter-state');
 function lintElementsAndSaveToLocalStorage(elements) {
     let result = elements.map(element => lint(element))
         .flat()
@@ -197,7 +197,7 @@ function lintByPredicate(element, linterPredicateIsNotOk, message) {
     return new _LinterResponse__WEBPACK_IMPORTED_MODULE_0__["default"](
         element.id,
         isOk,
-        isOk === true ? null : message
+        isOk === true ? null : element.id + ' - ' + message
     )
 }
 
@@ -214,9 +214,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ LinterMessages)
 /* harmony export */ });
 class LinterMessages {
-    static JS = "не нада js"
-    static DELEGATES = "не нада delegates"
-    static HTML = "не нада html"
+    static JS = "<b>Содержит JavaScript.</b> JavaScript поддерживается в Camunda 8, но требует изменений в процессе. Ознакомьтесь с <a href=\"https://docs.camunda.io/docs/components/modeler/bpmn/script-tasks/\">документацией</a>"
+    static DELEGATES = "<b>Содержит Java делегат.</b> Java делегаты не поддерживаются автоматически Camunda 8. Предлагаем перевести Java делегат на <a href\"\">ExternalTaskHandler</a> или ознакомиться с данной документацией, по подключению <a href='\"https://github.com/camunda-community-hub/camunda-7-to-8-migration/tree/main/camunda-7-adapter\">Camunda 7 adapter</a>, который позволяет переиспользовать Java Delegates"
+    static HTML = "<b>Содержит ссылку HTML файл.</b> HTML файл не поддерживается в Camunda 8. Используйте .forms. Подробнее <a href=\"https://docs.camunda.io/docs/guides/utilizing-forms/\">в документации</a>"
 }
 
 /***/ }),

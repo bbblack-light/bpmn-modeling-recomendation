@@ -5,17 +5,18 @@ import QuestionComponent from './QuestionComponent'
 
 export default function QuestionsComponent({questionsEnded}) {
     const [ answers, setAnswers ] = useState([])
+    const [ questionsAndAnswers, setQuestionAndAnswer ] = useState([])
     const [ questionIndex, setQuestionIndex ] = useState(0)
 
-    const nextQuestion = (answer) => {
-        answers.push(answer)
-        setAnswers(answers)
+    const nextQuestion = (questionWithAnswer) => {
+        questionsAndAnswers.push(questionWithAnswer)
+        setQuestionAndAnswer(questionsAndAnswers)
         if (questionIndex<questions.length-1)
         {
             setQuestionIndex(questionIndex+1)
         }
         else {
-            questionsEnded(answers)
+            questionsEnded(questionsAndAnswers)
         }
     }
 
@@ -29,7 +30,6 @@ export default function QuestionsComponent({questionsEnded}) {
                     question = {questions[questionIndex]}
                 />
             </div>
-            <button onClick={() => questionsEnded(answers)}> end questionaire</button>
         </div>
         </>
     )

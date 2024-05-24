@@ -3,10 +3,12 @@ module.exports = class NormilizeRecomendation {
     max;
     status;
     text;
-    constructor(status, min, max, text) {
+    additionalAction;
+    constructor(status, min, max, text, additionalAction = null) {
         this.status = status
         this.min = min
         this.max = max
         this.text = text
+        this.additionalAction = additionalAction
     }
 }

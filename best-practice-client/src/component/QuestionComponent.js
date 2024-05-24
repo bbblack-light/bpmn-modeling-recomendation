@@ -1,3 +1,4 @@
+import QuestionAndAnswer from '../domain/QuestionAndAnswer'
 import AnswerComponent from './AnswerComponent'
 
 export default function QuestionComponent({ question, nextQuestion }) {
@@ -11,8 +12,10 @@ export default function QuestionComponent({ question, nextQuestion }) {
                   <AnswerComponent 
                     key={ index }
                     data-idx={ index }
-                    onAnswerClicked={(data) => {
-                      nextQuestion(data)
+                    onAnswerClicked={(answerClickedData) => {
+                      nextQuestion(new QuestionAndAnswer(
+                        question.text, answerClickedData.text, answerClickedData.inputNodes
+                      ))
                     }}
                     answer = { answer }
                   />

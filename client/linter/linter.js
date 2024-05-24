@@ -1,6 +1,6 @@
 import LinterResponse from './LinterResponse'
 import LinterMessages from './linterMessages'
-
+localStorage.removeItem('linter-state');
 export default function lintElementsAndSaveToLocalStorage(elements) {
     let result = elements.map(element => lint(element))
         .flat()
@@ -52,6 +52,6 @@ function lintByPredicate(element, linterPredicateIsNotOk, message) {
     return new LinterResponse(
         element.id,
         isOk,
-        isOk === true ? null : message
+        isOk === true ? null : element.id + ' - ' + message
     )
 }

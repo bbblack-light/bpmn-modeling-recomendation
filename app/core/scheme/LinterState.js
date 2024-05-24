@@ -1,3 +1,5 @@
+const { constDevState } = require("../../domain/consts")
+
 module.exports = class LinterState {
     static #state = []
 
@@ -6,6 +8,7 @@ module.exports = class LinterState {
     }
 
     static getState() {
+        if (process.env.NODE_ENV === 'development') return constDevState
         return this.#state
     }
 }

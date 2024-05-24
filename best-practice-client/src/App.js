@@ -1,47 +1,58 @@
 import './App.css';
 import { allowStates } from './domain/consts';
-import { backend } from './remote';
+import { backend, saveSchemeState } from './remote';
 import QuestionsComponent from './component/QuestionsComponent'
 import CheckResultsComponent from './component/CheckResultsComponent'
 import { useState } from 'react'
+import QuestionaireInputscomponent from './component/QuestionaireInputsComponent';
+import BaseInfoComponent from './component/BaseInfoComponent';
 
 function App() {
-  const [windowState, setWindowState] = useState(allowStates.QUESTIONAIRE)
+  const [windowState, setWindowState] = useState(allowStates.BASE_INFO)
   const [results, setResults] = useState({})
+  const [questionaireInputs, setQuestionaireInputs] = useState([])
 
-  const endQuestionaire = async (answers) =>  {
-      console.log(answers)
+  const endQuestionaire = async (questionaireInputs) =>  {
+      await saveSchemeState()
+      setQuestionaireInputs(questionaireInputs)
       let results = await backend.send(
-        'expert-system-resolve', 
-        answers.map(answer => answer.inputNodes).flat()
+        'questionaire-resolve',
+        questionaireInputs.map(questionaireInput => questionaireInput.inputNodes).flat()
       )
       console.log(results)
       setResults(results)
       setWindowState(allowStates.CHECK_RESULTS)
-
-
-      let results2 = await backend.send(
-        'questionaire-resolve', 
-        answers.map(answer => answer.inputNodes).flat()
-      )
-      console.log(results2)
   }
 
-  const startAgain = () =>  {
-    console.log('called', windowState)
+  const startQuestionaire = () =>  {
     setWindowState(allowStates.QUESTIONAIRE)
-}
+  }
+
+  const toStart =() => {
+    setWindowState(allowStates.BASE_INFO)
+  }
 
   switch (windowState) {
+    case allowStates.BASE_INFO:
+      return <BaseInfoComponent
+        startQuestionaire={startQuestionaire}
+      />
     case allowStates.QUESTIONAIRE:
       return <QuestionsComponent
         questionsEnded = {endQuestionaire}
       />
     case allowStates.CHECK_RESULTS:
-      return <CheckResultsComponent
-        results = {results}
-        startAgain = {startAgain}
-      />
+      return (
+        <>
+          <QuestionaireInputscomponent
+            questionaireInputs = {questionaireInputs}
+          />
+          <CheckResultsComponent
+            results = {results}
+            startAgain = {toStart}
+          />
+        </>
+      )
     default:
       return <div>i dont know what next</div>
   }

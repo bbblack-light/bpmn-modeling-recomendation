@@ -1,7 +1,7 @@
 const InputNode = require("../../domain/expert-system/InputNode")
 const Answer = require("../../domain/questionaire/Answer")
 const Question = require("../../domain/questionaire/Question")
-const { inputCodes } = require('./../expert-system/consts')
+const { inputCodes } = require('../../domain/consts')
 
 module.exports = class Questionaire {
     static #content = [
@@ -10,14 +10,14 @@ module.exports = class Questionaire {
             [
                 new Answer(
                     "Да", [
-                        new InputNode(inputCodes.PREPARE_TO_CAMUNDA_8, 1),
+                        new InputNode(inputCodes.PREPARE_TO_CAMUNDA_8, 0.9),
                         new InputNode(inputCodes.NOT_PREPARE_TO_CAMUNDA_8, 0)
                     ]
                 ),
                 new Answer(
                     "Нет", [
                         new InputNode(inputCodes.PREPARE_TO_CAMUNDA_8, 0),
-                        new InputNode(inputCodes.NOT_PREPARE_TO_CAMUNDA_8, 1)
+                        new InputNode(inputCodes.NOT_PREPARE_TO_CAMUNDA_8, 0.9)
                     ]
                 )
             ]
@@ -25,7 +25,7 @@ module.exports = class Questionaire {
         new Question(
             "Есть ли в процессе моменты, которые можно считать обработкой ошибок? Они сделаны с помощью gateway?",
             [
-                new Answer("Да", [ new InputNode(inputCodes.HANDLE_ERROR, 1) ]),
+                new Answer("Да", [ new InputNode(inputCodes.HANDLE_ERROR, 0.9) ]),
                 new Answer("Нет", [ new InputNode(inputCodes.HANDLE_ERROR, 0) ])
             ]
         ),
@@ -33,10 +33,10 @@ module.exports = class Questionaire {
             "В процесс сложно внести новые изменения?",
             [
                 new Answer("Да, очень!", [ 
-                    new InputNode(inputCodes.HARD_TO_FEATURES, 1),
+                    new InputNode(inputCodes.HARD_TO_FEATURES, 0.9),
                 ]),
                 new Answer("Да", [ 
-                    new InputNode(inputCodes.HARD_TO_FEATURES, 0.8),
+                    new InputNode(inputCodes.HARD_TO_FEATURES, 0.7),
                 ]),
                 new Answer("Нет", [ 
                     new InputNode(inputCodes.HARD_TO_FEATURES, 0),
@@ -46,7 +46,7 @@ module.exports = class Questionaire {
         new Question(
             "Есть ли в процессе повторяющиеся моменты?",
             [
-                new Answer("Да", [ new InputNode(inputCodes.REPEATABLE_MOMENTS, 1) ]),
+                new Answer("Да", [ new InputNode(inputCodes.REPEATABLE_MOMENTS, 0.9) ]),
                 new Answer("Нет", [ new InputNode(inputCodes.REPEATABLE_MOMENTS, 0) ])
             ]
         ),
@@ -54,12 +54,12 @@ module.exports = class Questionaire {
             "Собираетесь ли вы пользоваться своим решением для тасклиста на основе .forms?",
             [
                 new Answer("Да", [ 
-                    new InputNode(inputCodes.CUSTOM_TASKLIST, 1),
+                    new InputNode(inputCodes.CUSTOM_TASKLIST, 0.9),
                     new InputNode(inputCodes.NO_CUSTOM_TASKLIST, 0) 
                 ]),
                 new Answer("Нет", [
                     new InputNode(inputCodes.CUSTOM_TASKLIST, 0),
-                    new InputNode(inputCodes.NO_CUSTOM_TASKLIST, 1)
+                    new InputNode(inputCodes.NO_CUSTOM_TASKLIST, 0.9)
                 ])
             ]
         ),
@@ -67,7 +67,7 @@ module.exports = class Questionaire {
             "Процесс требуется срочно запустить на пользователях?",
             [
                 new Answer("Да", [ 
-                    new InputNode(inputCodes.QUICK_RELEASE, 1),
+                    new InputNode(inputCodes.QUICK_RELEASE, 0.9),
                     new InputNode(inputCodes.NOT_QUICK_RELEASE, 0),
                 ]),
                 new Answer("Скорее да", [ 
@@ -80,7 +80,7 @@ module.exports = class Questionaire {
                 ]),
                 new Answer("Нет", [ 
                     new InputNode(inputCodes.QUICK_RELEASE, 0),
-                    new InputNode(inputCodes.NOT_QUICK_RELEASE, 1),
+                    new InputNode(inputCodes.NOT_QUICK_RELEASE, 0.9),
                 ])
             ]
         )

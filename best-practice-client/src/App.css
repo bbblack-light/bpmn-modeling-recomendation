@@ -66,7 +66,9 @@ button {
   text-align: center;
   padding-left: 15px;
   padding-right: 15px;
-  margin: 10px auto
+  margin: 10px auto;
+  display: block;
+  width: 40px;
 }
 
 .card {
@@ -86,8 +88,92 @@ button {
   margin: auto;
 }
 
+.card-center-content-text {
+  margin: 20px;
+  text-align: center;
+  align-items: center !important;
+}
+
 .wrapper {
   text-align: center;
   margin: 20px auto;
   width: 550px;
+  display: grid;
+}
+
+.recomendationIcon {
+  width: 30px;
+  height: 30px;
+}
+
+.recomendationCard {
+  display: grid;
+  margin-bottom: 10px;
+  margin: 5px auto;
+  padding: 10px;
+  align-items: center;
+  background-color: hsl(225, 10%, 97%);
+  color: hsl(225, 10%, 15%);
+  border-radius: 10px;
+  width: 530px;
+  position: relative;
+  text-align: left;
+}
+
+.recomendationCardMainInfo {
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+
+.recomendationsWrapper {
+  display: grid;
+  text-align: center;
+  margin: 10px auto
+}
+
+.recomendationText {
+  margin-left: 10px;
+  width: 400px;
+}
+
+.questionInput {
+  display: flex;
+  align-items:stretch;
+  text-align: left;
+  margin-bottom: 10px;
+  margin: 5px auto 5px auto;
+  padding: 10px;
+  align-items: center;
+  background-color: hsl(225, 10%, 97%);
+  color: hsl(225, 10%, 15%);
+  border-radius: 10px;
+  position: relative;
+  text-align: left;
+}
+
+.lintedListData {
+  padding-inline-start: 80px !important;
+}
+
+.lintedData {
+  margin-bottom: 10px;
+}
+
+.downButton {
+  width: 200px;
+}
+
+.margin-10px-auto {
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.fit-content {
+  width: fit-content;
+}
+
+.display-flex {
+  display: flex;
+  align-items: center;
 }
