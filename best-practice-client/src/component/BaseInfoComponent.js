@@ -30,7 +30,7 @@ export default function BaseInfoComponent({ startQuestionaire }) {
                     </div>
                     <div class="margin-10px-auto display-flex  fit-content">
                         <img alt={""} src={checkmarkIcon} class="recomendationIcon"></img>
-                        <div><b>Все рекомендации соблюдены.</b> Опрос и автоматическая проверка процесса показали, что вы успешно придерживаетесь лучших практик в платформе Camunda</div>
+                        <div><b>Все рекомендации соблюдены.</b> Опрос и автоматическая проверка процесса показали, что вы успешно придерживаетесь лучших практик поддержания качества в платформе Camunda</div>
                     </div>
                     <div>
                         <button class="btn downButton"

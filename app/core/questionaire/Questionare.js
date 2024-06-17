@@ -6,7 +6,7 @@ const { inputCodes } = require('../../domain/consts')
 module.exports = class Questionaire {
     static #content = [
         new Question(
-            "Собираетесь обновляться на камунду 8?",
+            "Вы готовитесь к обновлению на Camunda 8?",
             [
                 new Answer(
                     "Да", [
@@ -23,19 +23,19 @@ module.exports = class Questionaire {
             ]
         ),
         new Question(
-            "Есть ли в процессе моменты, которые можно считать обработкой ошибок? Они сделаны с помощью gateway?",
+            "Процесс имеет места, которые можно считать обработкой бизнес ошибок, и они сделаны с помощью gateway?",
             [
                 new Answer("Да", [ new InputNode(inputCodes.HANDLE_ERROR, 0.9) ]),
                 new Answer("Нет", [ new InputNode(inputCodes.HANDLE_ERROR, 0) ])
             ]
         ),
         new Question(
-            "В процесс сложно внести новые изменения?",
+            "Внесение изменений в процесс и его тесты занимает больше 1 дня?",
             [
-                new Answer("Да, очень!", [ 
+                new Answer("Да, часто", [ 
                     new InputNode(inputCodes.HARD_TO_FEATURES, 0.9),
                 ]),
-                new Answer("Да", [ 
+                new Answer("Да, редко", [ 
                     new InputNode(inputCodes.HARD_TO_FEATURES, 0.7),
                 ]),
                 new Answer("Нет", [ 
@@ -44,14 +44,14 @@ module.exports = class Questionaire {
             ]
         ),
         new Question(
-            "Есть ли в процессе повторяющиеся моменты?",
+            "Процесс имеет повторяющиеся моменты?",
             [
                 new Answer("Да", [ new InputNode(inputCodes.REPEATABLE_MOMENTS, 0.9) ]),
                 new Answer("Нет", [ new InputNode(inputCodes.REPEATABLE_MOMENTS, 0) ])
             ]
         ),
         new Question(
-            "Собираетесь ли вы пользоваться своим решением для тасклиста на основе .forms?",
+            "В вашей компании пользуются внутренним решением для Tasklist на основе Camunda Forms?",
             [
                 new Answer("Да", [ 
                     new InputNode(inputCodes.CUSTOM_TASKLIST, 0.9),
@@ -64,9 +64,9 @@ module.exports = class Questionaire {
             ]
         ),
         new Question(
-            "Процесс требуется срочно запустить на пользователях?",
+            "Заказчик требует срочно запустить процесс на пользователях?",
             [
-                new Answer("Да", [ 
+                new Answer("Да", [
                     new InputNode(inputCodes.QUICK_RELEASE, 0.9),
                     new InputNode(inputCodes.NOT_QUICK_RELEASE, 0),
                 ]),
@@ -85,6 +85,7 @@ module.exports = class Questionaire {
             ]
         )
     ]
+
     static getContent() {
         return this.#content
     }

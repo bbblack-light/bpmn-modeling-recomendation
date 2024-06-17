@@ -1,6 +1,8 @@
 import LinterResponse from './LinterResponse'
 import LinterMessages from './linterMessages'
+
 localStorage.removeItem('linter-state');
+
 export default function lintElementsAndSaveToLocalStorage(elements) {
     let result = elements.map(element => lint(element))
         .flat()
@@ -39,8 +41,7 @@ const linters = [
     {
         predicate: (element)=> {
             let bpmnElement = element.di.bpmnElement
-
-            return element.type === "bpmn:UserTask" && bpmnElement.formRef !== undefined && bpmnElement.formRef.includes(".html")
+            return element.type === "bpmn:UserTask" && bpmnElement.formKey !== undefined && bpmnElement.formKey.includes(".html")
         },
         message: LinterMessages.HTML
     }

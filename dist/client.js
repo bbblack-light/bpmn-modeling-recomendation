@@ -145,7 +145,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _linterMessages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./linterMessages */ "./client/linter/linterMessages.js");
 
 
+
 localStorage.removeItem('linter-state');
+
 function lintElementsAndSaveToLocalStorage(elements) {
     let result = elements.map(element => lint(element))
         .flat()
@@ -184,8 +186,7 @@ const linters = [
     {
         predicate: (element)=> {
             let bpmnElement = element.di.bpmnElement
-
-            return element.type === "bpmn:UserTask" && bpmnElement.formRef !== undefined && bpmnElement.formRef.includes(".html")
+            return element.type === "bpmn:UserTask" && bpmnElement.formKey !== undefined && bpmnElement.formKey.includes(".html")
         },
         message: _linterMessages__WEBPACK_IMPORTED_MODULE_1__["default"].HTML
     }

@@ -21,7 +21,7 @@ const createWindow = () => {
 module.exports = function () {
   return [
     {
-      label: 'Start best practice test',
+      label: 'Open best practice helper',
       action: function () {
         createWindow()
       }
